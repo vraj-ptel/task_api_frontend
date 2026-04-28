@@ -16,6 +16,15 @@ export function middleware(request: NextRequest) {
     if (token) return;
     return NextResponse.redirect(new URL("/sign-in", request.nextUrl));
   }
+  if (request.nextUrl.pathname == "/") {
+    const token = request.cookies.get("token");
+    if (token)
+      return NextResponse.redirect(new URL("/dashboard", request.nextUrl));
+    else {
+      return NextResponse.redirect(new URL("/sign-in", request.nextUrl));
+    }
+  }
+
   return;
 }
 export const config = {
